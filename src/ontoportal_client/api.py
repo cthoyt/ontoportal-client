@@ -91,6 +91,7 @@ class BioPortalClient(PreconfiguredOntoPortalClient):
     To get an API key, follow the sign-up process at https://bioportal.bioontology.org/account.
     """
 
+    # docstr-coverage: inherited
     def __init__(self, **kwargs):  # noqa:D107
         super().__init__(name="bioportal", **kwargs)
 
@@ -98,6 +99,7 @@ class BioPortalClient(PreconfiguredOntoPortalClient):
 class AgroPortalClient(PreconfiguredOntoPortalClient):
     """A client for AgroPortal."""
 
+    # docstr-coverage: inherited
     def __init__(self, **kwargs):  # noqa:D107
         super().__init__(name="agroportal", **kwargs)
 
@@ -105,5 +107,6 @@ class AgroPortalClient(PreconfiguredOntoPortalClient):
 class EcoPortalClient(PreconfiguredOntoPortalClient):
     """A client for EcoPortal."""
 
+    # docstr-coverage: inherited
     def __init__(self, **kwargs):  # noqa:D107
         super().__init__(name="ecoportal", **kwargs)
