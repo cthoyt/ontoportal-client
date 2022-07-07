@@ -67,6 +67,10 @@ jobs:
       - name: Test with pytest and generate coverage file
         run:
           tox -e py
+        env:
+          BIOPORTAL_API_KEY: ${{ secrets.BIOPORTAL_API_KEY }}
+          ECOPORTAL_API_KEY: ${{ secrets.ECOPORTAL_API_KEY }}
+          AGROPORTAL_API_KEY: ${{ secrets.AGROPORTAL_API_KEY }}
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v1
         if: success()
