@@ -42,26 +42,38 @@ A client to BioPortal and other OntoPortal instances.
 
 ## 💪 Getting Started
 
-> TODO show in a very small amount of space the **MOST** useful thing your package can do.
-Make it as short as possible! You have an entire set of docs for later.
+One of several OntoPortal clients can be instantiated and
+accessed with the same API:
 
+```python
+from ontoportal_client import BioPortalClient
+
+bioportal_client = BioPortalClient()
+ontologies = bioportal_client.get_ontologies()
+```
 
 ## 🚀 Installation
 
-<!-- Uncomment this section after your first ``tox -e finish``
-The most recent release can be installed from
-[PyPI](https://pypi.org/project/ontoportal_client/) with:
-
-```bash
+```shell
 $ pip install ontoportal_client
 ```
--->
 
 The most recent code and data can be installed directly from GitHub with:
 
-```bash
+```shell
 $ pip install git+https://github.com/cthoyt/ontoportal-client.git
 ```
+
+## ⚙️ Configuration
+
+Configuration of the API tokens for for each of the clients is mediated by
+[`pystow`](https://github.com/cthoyt/pystow). Using BioPortal as an example,
+you can either:
+
+1. Pass the API key in the construtor of the client class
+2. Set the `BIOPORTAL_API_KEY` environment variable
+3. Create a file `~/.config/bioportal.ini` and set the `api_key` value under
+   the `[bioportal]` section.
 
 ## 👐 Contributing
 

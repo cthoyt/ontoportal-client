@@ -20,6 +20,6 @@ class TestBioPortalClient(unittest.TestCase):
 
     def test_get_ontologies(self):
         """Test getting the ontologies."""
-        res = self.client.get_json("/ontologies")
+        res = self.client.get_ontologies()
         acronyms = {entry["acronym"] for entry in res}
         self.assertIn("GO", acronyms)

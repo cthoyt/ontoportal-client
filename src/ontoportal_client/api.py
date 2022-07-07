@@ -55,6 +55,10 @@ class OntoPortalClient:
         params.setdefault("apikey", self.api_key)
         return requests.get(self.base_url + "/" + path.lstrip("/"), params=params, **kwargs)
 
+    def get_ontologies(self):
+        """Get ontologies."""
+        return self.get_json("ontologies")
+
 
 class PreconfiguredOntoPortalClient(OntoPortalClient):
     """A client for an OntoPortal site, like BioPortal."""
@@ -87,19 +91,19 @@ class BioPortalClient(PreconfiguredOntoPortalClient):
     To get an API key, follow the sign-up process at https://bioportal.bioontology.org/account.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs):  # noqa:D107
         super().__init__(name="bioportal", **kwargs)
 
 
 class AgroPortalClient(PreconfiguredOntoPortalClient):
     """A client for AgroPortal."""
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs):  # noqa:D107
         super().__init__(name="agroportal", **kwargs)
 
 
 class EcoPortalClient(PreconfiguredOntoPortalClient):
     """A client for EcoPortal."""
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs):  # noqa:D107
         super().__init__(name="ecoportal", **kwargs)
