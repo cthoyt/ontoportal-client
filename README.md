@@ -52,6 +52,8 @@ bioportal_client = BioPortalClient()
 ontologies = bioportal_client.get_ontologies()
 ```
 
+Complete documentation can be found on [ontoportal-client.readthedocs.io](https://ontoportal-client.readthedocs.io/)
+
 ## 🚀 Installation
 
 ```shell
