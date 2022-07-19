@@ -1,4 +1,3 @@
 Usage
 =====
-.. automodule:: ontoportal_client.api
-    :members:
+.. automodapi:: ontoportal_client.api

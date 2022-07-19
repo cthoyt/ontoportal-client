@@ -5,7 +5,7 @@
 Get an API key by logging up, signing in, and navigating to .
 """
 
-from typing import Any, Dict, Optional
+from typing import Any, ClassVar, Dict, Optional
 
 import pystow
 import requests
@@ -69,23 +69,27 @@ class OntoPortalClient:
 class PreconfiguredOntoPortalClient(OntoPortalClient):
     """A client for an OntoPortal site, like BioPortal."""
 
-    def __init__(self, name: NAMES, api_key: Optional[str] = None, value_key: str = "api_key"):
+    #: The name of the instance
+    name: ClassVar[str]
+
+    def __init__(self, api_key: Optional[str] = None, value_key: str = "api_key"):
         """Instantiate the OntoPortal Client.
 
-        :param name: The name of the instance. One of:
-            1. ``bioportal``
-            2. ``agroportal``
-            3. ``ecoportal``
-        :param api_key: The API key for the instance. If not given, use :mod:`pystow` to read
-            the configuration in one of the following ways (assuming BioPortal)
+        :param api_key:
+            The API key for the instance. If not given, use :mod:`pystow` to read
+            the configuration in one of the following ways. Using BioPortal as an example,
+            where the subclass of :class:`PreconfiguredOntoPortalClient` sets the class
+            variable ``name = "bioportal"``, the configuration can be set in the following
+            ways:
 
-            1. From `BIOPORTAL_API_KEY` in the environment
+            1. From `BIOPORTAL_API_KEY` in the environment, where the `name` is uppercased
+               before `_API_KEY`
             2. From a configuration file at `~/.config/bioportal.ini`
                and set the `[bioportal]` section in it with the given key
-        :param value_key: The name of the key to use. By default, uses ``api_key``
+        :param value_key:
+            The name of the key to use. By default, uses ``api_key``
         """
-        self.name = name
-        base_url = URLS[name]
+        base_url = URLS[self.name]
         if api_key is None:
             api_key = pystow.get_config(self.name, value_key, raise_on_missing=True)
         super().__init__(api_key=api_key, base_url=base_url)
@@ -97,25 +101,19 @@ class BioPortalClient(PreconfiguredOntoPortalClient):
     To get an API key, follow the sign-up process at https://bioportal.bioontology.org/account.
     """
 
-    # docstr-coverage: inherited
-    def __init__(self, **kwargs):  # noqa:D107
-        super().__init__(name="bioportal", **kwargs)
+    name = "bioportal"
 
 
 class AgroPortalClient(PreconfiguredOntoPortalClient):
     """A client for AgroPortal."""
 
-    # docstr-coverage: inherited
-    def __init__(self, **kwargs):  # noqa:D107
-        super().__init__(name="agroportal", **kwargs)
+    name = "agroportal"
 
 
 class EcoPortalClient(PreconfiguredOntoPortalClient):
     """A client for EcoPortal."""
 
-    # docstr-coverage: inherited
-    def __init__(self, **kwargs):  # noqa:D107
-        super().__init__(name="ecoportal", **kwargs)
+    name = "ecoportal"
 
 
 class MatPortalClient(PreconfiguredOntoPortalClient):
@@ -124,9 +122,7 @@ class MatPortalClient(PreconfiguredOntoPortalClient):
     Create an account and get an API key by starting at https://matportal.org/accounts/new.
     """
 
-    # docstr-coverage: inherited
-    def __init__(self, **kwargs):  # noqa:D107
-        super().__init__(name="matportal", **kwargs)
+    name = "matportal"
 
 
 class SIFRBioPortalClient(PreconfiguredOntoPortalClient):
@@ -135,9 +131,7 @@ class SIFRBioPortalClient(PreconfiguredOntoPortalClient):
     Create an account and get an API key by starting at http://bioportal.lirmm.fr/accounts/new.
     """
 
-    # docstr-coverage: inherited
-    def __init__(self, **kwargs):  # noqa:D107
-        super().__init__(name="sifr_bioportal", **kwargs)
+    name = "sifr_bioportal"
 
 
 class MedPortalClient(PreconfiguredOntoPortalClient):
@@ -146,6 +140,4 @@ class MedPortalClient(PreconfiguredOntoPortalClient):
     Create an account and get an API key by starting at https://medportal.bmicc.cn/accounts/new.
     """
 
-    # docstr-coverage: inherited
-    def __init__(self, **kwargs):  # noqa:D107
-        super().__init__(name="medportal", **kwargs)
+    name = "medportal"
