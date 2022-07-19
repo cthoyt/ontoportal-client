@@ -17,6 +17,9 @@ __all__ = [
     "AgroPortalClient",
     "EcoPortalClient",
     "BioPortalClient",
+    "MatPortalClient",
+    "SIFRBioPortalClient",
+    "MedPortalClient",
 ]
 
 
@@ -110,3 +113,36 @@ class EcoPortalClient(PreconfiguredOntoPortalClient):
     # docstr-coverage: inherited
     def __init__(self, **kwargs):  # noqa:D107
         super().__init__(name="ecoportal", **kwargs)
+
+
+class MatPortalClient(PreconfiguredOntoPortalClient):
+    """A client for materials science ontologies in `MatPortal <https://matportal.org>`_.
+
+    Create an account and get an API key by starting at https://matportal.org/accounts/new.
+    """
+
+    # docstr-coverage: inherited
+    def __init__(self, **kwargs):  # noqa:D107
+        super().__init__(name="matportal", **kwargs)
+
+
+class SIFRBioPortalClient(PreconfiguredOntoPortalClient):
+    """A client for French biomedical ontologies in `SIFR BioPortal <http://bioportal.lirmm.fr>`_.
+
+    Create an account and get an API key by starting at http://bioportal.lirmm.fr/accounts/new.
+    """
+
+    # docstr-coverage: inherited
+    def __init__(self, **kwargs):  # noqa:D107
+        super().__init__(name="sifr_bioportal", **kwargs)
+
+
+class MedPortalClient(PreconfiguredOntoPortalClient):
+    """A client for medical ontologies in `MedPortal <https://medportal.bmicc.cn>`_.
+
+    Create an account and get an API key by starting at https://medportal.bmicc.cn/accounts/new.
+    """
+
+    # docstr-coverage: inherited
+    def __init__(self, **kwargs):  # noqa:D107
+        super().__init__(name="medportal", **kwargs)
