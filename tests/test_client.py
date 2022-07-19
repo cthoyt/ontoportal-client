@@ -2,7 +2,7 @@
 
 """Test OntoPortal clients."""
 
-from ontoportal_client import BioPortalClient, MatPortalClient, MedPortalClient, SIFRBioPortalClient
+from ontoportal_client import BioPortalClient, MatPortalClient, MedPortalClient, SIFRBioPortalClient, OntoPortalClient
 from tests import cases
 
 
@@ -32,3 +32,10 @@ class TestMedPortalClient(cases.TestOntoPortalClient):
 
     client_cls = MedPortalClient
     test_acronym = "DOID"
+
+
+class TestClients(unittest_templates.MetaTestCase[OntoPortalClient]):
+    """Test that the loss functions all have tests."""
+
+    base_cls = OntoPortalClient
+    base_test = cases.TestOntoPortalClient
