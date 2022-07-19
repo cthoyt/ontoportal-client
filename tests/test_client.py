@@ -2,7 +2,15 @@
 
 """Test OntoPortal clients."""
 
-from ontoportal_client import BioPortalClient, MatPortalClient, MedPortalClient, SIFRBioPortalClient, OntoPortalClient
+from ontoportal_client import (
+    AgroPortalClient,
+    BioPortalClient,
+    EcoPortalClient,
+    MatPortalClient,
+    MedPortalClient,
+    OntoPortalClient,
+    SIFRBioPortalClient,
+)
 from tests import cases
 
 
@@ -11,6 +19,20 @@ class TestBioPortalClient(cases.TestOntoPortalClient):
 
     client_cls = BioPortalClient
     test_acronym = "GO"
+
+
+class TestEcoPortalClient(cases.TestOntoPortalClient):
+    """Test the EcoPortal client."""
+
+    client_cls = EcoPortalClient
+    test_acronym = "ENVO"
+
+
+class TestAgroPortalClient(cases.TestOntoPortalClient):
+    """Test the AgroPortal client."""
+
+    client_cls = AgroPortalClient
+    test_acronym = "AGROVOC"
 
 
 class TestMatPortalClient(cases.TestOntoPortalClient):
