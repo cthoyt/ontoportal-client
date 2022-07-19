@@ -17,6 +17,9 @@ __all__ = [
     "AgroPortalClient",
     "EcoPortalClient",
     "BioPortalClient",
+    "MatPortalClient",
+    "SIFRBioPortalClient",
+    "MedPortalClient",
 ]
 
 
@@ -110,3 +113,27 @@ class EcoPortalClient(PreconfiguredOntoPortalClient):
     # docstr-coverage: inherited
     def __init__(self, **kwargs):  # noqa:D107
         super().__init__(name="ecoportal", **kwargs)
+
+
+class MatPortalClient(PreconfiguredOntoPortalClient):
+    """A client for MatPortal."""
+
+    # docstr-coverage: inherited
+    def __init__(self, **kwargs):  # noqa:D107
+        super().__init__(name="matportal", **kwargs)
+
+
+class SIFRBioPortalClient(PreconfiguredOntoPortalClient):
+    """A client for SIFR BioPortal."""
+
+    # docstr-coverage: inherited
+    def __init__(self, **kwargs):  # noqa:D107
+        super().__init__(name="sifr_bioportal", **kwargs)
+
+
+class MedPortalClient(PreconfiguredOntoPortalClient):
+    """A client for MedPortal."""
+
+    # docstr-coverage: inherited
+    def __init__(self, **kwargs):  # noqa:D107
+        super().__init__(name="medportal", **kwargs)
