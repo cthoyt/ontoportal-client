@@ -1,25 +1,34 @@
 # -*- coding: utf-8 -*-
 
-"""Test a client."""
+"""Test OntoPortal clients."""
 
-import unittest
-from typing import ClassVar
-
-from ontoportal_client import BioPortalClient, OntoPortalClient
+from ontoportal_client import BioPortalClient, MatPortalClient, MedPortalClient, SIFRBioPortalClient
+from tests import cases
 
 
-class TestBioPortalClient(unittest.TestCase):
-    """Test a client."""
+class TestBioPortalClient(cases.TestOntoPortalClient):
+    """Test the BioPortal client."""
 
-    client: ClassVar[OntoPortalClient]
+    client_cls = BioPortalClient
+    test_acronym = "GO"
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        """Set up the class with a BioPortal client."""
-        cls.client = BioPortalClient()
 
-    def test_get_ontologies(self):
-        """Test getting the ontologies."""
-        res = self.client.get_ontologies()
-        acronyms = {entry["acronym"] for entry in res}
-        self.assertIn("GO", acronyms)
+class TestMatPortalClient(cases.TestOntoPortalClient):
+    """Test the MatPortal client."""
+
+    client_cls = MatPortalClient
+    test_acronym = "DISO"
+
+
+class SIFRBioPortalClient(cases.TestOntoPortalClient):
+    """Test the SIFR BioPortal client."""
+
+    client_cls = SIFRBioPortalClient
+    test_acronym = "NABM"
+
+
+class TestMedPortalClient(cases.TestOntoPortalClient):
+    """Test the MedPortal client."""
+
+    client_cls = MedPortalClient
+    test_acronym = "DOID"
