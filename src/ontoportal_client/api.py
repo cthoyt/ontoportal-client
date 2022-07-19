@@ -13,7 +13,10 @@ import requests
 from .constants import NAMES, URLS
 
 __all__ = [
+    # Base clients
     "OntoPortalClient",
+    "PreconfiguredOntoPortalClient",
+    # Concrete clients
     "AgroPortalClient",
     "EcoPortalClient",
     "BioPortalClient",
