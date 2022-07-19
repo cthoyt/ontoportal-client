@@ -116,7 +116,10 @@ class EcoPortalClient(PreconfiguredOntoPortalClient):
 
 
 class MatPortalClient(PreconfiguredOntoPortalClient):
-    """A client for MatPortal."""
+    """A client for materials science ontologies in `MatPortal <https://matportal.org>`_.
+
+    Create an account and get an API key by starting at https://matportal.org/accounts/new.
+    """
 
     # docstr-coverage: inherited
     def __init__(self, **kwargs):  # noqa:D107
@@ -124,7 +127,10 @@ class MatPortalClient(PreconfiguredOntoPortalClient):
 
 
 class SIFRBioPortalClient(PreconfiguredOntoPortalClient):
-    """A client for SIFR BioPortal."""
+    """A client for French biomedical ontologies in `SIFR BioPortal <http://bioportal.lirmm.fr>`_.
+
+    Create an account and get an API key by starting at http://bioportal.lirmm.fr/accounts/new.
+    """
 
     # docstr-coverage: inherited
     def __init__(self, **kwargs):  # noqa:D107
@@ -132,7 +138,10 @@ class SIFRBioPortalClient(PreconfiguredOntoPortalClient):
 
 
 class MedPortalClient(PreconfiguredOntoPortalClient):
-    """A client for MedPortal."""
+    """A client for medical ontologies in `MedPortal <https://medportal.bmicc.cn>`_.
+
+    Create an account and get an API key by starting at https://medportal.bmicc.cn/accounts/new.
+    """
 
     # docstr-coverage: inherited
     def __init__(self, **kwargs):  # noqa:D107
