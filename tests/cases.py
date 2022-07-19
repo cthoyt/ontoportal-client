@@ -2,8 +2,7 @@
 
 """Test a client."""
 
-import unittest
-from typing import ClassVar, Type
+from typing import ClassVar
 
 import unittest_templates
 
