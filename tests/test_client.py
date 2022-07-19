@@ -2,6 +2,8 @@
 
 """Test OntoPortal clients."""
 
+import unittest_templates
+
 from ontoportal_client import (
     AgroPortalClient,
     BioPortalClient,
