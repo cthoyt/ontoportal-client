@@ -5,7 +5,8 @@
 Get an API key by logging up, signing in, and navigating to .
 """
 
-from typing import Any, ClassVar, Dict, Optional, cast
+from typing import Any, ClassVar, Dict, Optional, Set, cast
+from urllib.parse import quote
 
 import pystow
 import requests
@@ -83,6 +84,41 @@ class OntoPortalClient:
     def get_ontologies(self):
         """Get ontologies."""
         return self.get_json("ontologies")
+
+    def get_ontology_versions(self, ontology: str) -> Set[str]:
+        """Get all versions for the given ontology."""
+        return {
+            result["version"]
+            for result in self.get_json(f"/ontologies/{ontology.upper()}/submissions")
+        }
+
+    def annotate(self, text: str, ontology: Optional[str] = None, require_exact_match: bool = True):
+        """Annotate the given text."""
+        # include =['prefLabel', 'synonym', 'definition', 'semanticType', 'cui']
+        include = ["prefLabel", "semanticType", "cui"]
+        params = {
+            "include": ",".join(include),
+            "require_exact_match": require_exact_match,
+            "text": text,
+        }
+        if ontology:
+            params["ontologies"] = ontology
+        return self.get_json("/annotator", params=params)
+
+    def search(self, text: str, ontology: Optional[str] = None):
+        """Search the given text."""
+        params = {"q": text, "include": ["prefLabel"]}
+        if ontology:
+            params["ontologies"] = ontology
+        return self.get_json("/search", params)
+
+    def get_ancestors(self, ontology: str, uri: str):
+        """Get the ancestors of the given class."""
+        quoted_uri = quote(uri, safe="")
+        return self.get_json(
+            f"/ontologies/{ontology}/classes/{quoted_uri}/ancestors",
+            params={"display_context": "false"},
+        )
 
 
 class PreconfiguredOntoPortalClient(OntoPortalClient):
