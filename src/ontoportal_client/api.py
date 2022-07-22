@@ -6,6 +6,7 @@ Get an API key by logging up, signing in, and navigating to .
 """
 
 from typing import Any, ClassVar, Dict, Optional, cast
+from urllib.parse import quote
 
 import pystow
 import requests
@@ -74,7 +75,7 @@ class OntoPortalClient:
             params = {}
         params.setdefault("apikey", self.api_key)
         if path.startswith(self.base_url):
-            path = path[len(self.base_url) :]
+            path = path[len(self.base_url):]
         res = requests.get(self.base_url + "/" + path.lstrip("/"), params=params, **kwargs)
         if raise_for_status:
             res.raise_for_status()
@@ -83,6 +84,34 @@ class OntoPortalClient:
     def get_ontologies(self):
         """Get ontologies."""
         return self.get_json("ontologies")
+
+    def get_ontology_versions(self, ontology: str) -> Set[str]:
+        """Get all versions for the given ontology."""
+        return {
+            result["version"]
+            for result in self.get_json(f"/ontologies/{ontology.upper()}/submissions")
+        }
+
+    def annotate(self, text: str, require_exact_match: bool = True):
+        # include =['prefLabel', 'synonym', 'definition', 'semanticType', 'cui']
+        include = ["prefLabel", "semanticType", "cui"]
+        params = {"include": ",".join(include), "require_exact_match": require_exact_match, "text": text}
+        if self.resource and self.resource.slug:
+            params["ontologies"] = self.resource.slug.upper()
+        return self.get_json("/annotator", params=params)
+
+    def search(self, text: str, ontology: Optional[str] = None):
+        params = {"q": text, "include": ["prefLabel"]}
+        if ontology:
+            params["ontologies"] = ontology
+        return self.get_json("/search", params)
+
+    def ancestors(self, ontology: str, uri: str) -> Iterable[URI]:
+        quoted_uri = quote(uri, safe="")
+        return self.get_json(
+            f"/ontologies/{ontology}/classes/{quoted_uri}/ancestors",
+            params={"display_context": "false"},
+        )
 
 
 class PreconfiguredOntoPortalClient(OntoPortalClient):
