@@ -23,6 +23,20 @@ class TestBioPortalClient(cases.TestOntoPortalClient):
     cls = BioPortalClient
     test_acronym = "GO"
 
+    def test_search(self):
+        """Test searching an ontology."""
+        res = self.instance.search("cell")
+        print(res)
+
+    def test_annotate(self):
+        """Test annotating a term."""
+        res = self.instance.annotate("cell")
+        print(res)
+
+    def test_ancestors(self):
+        """Test searching an ontology."""
+        res = self.instance.get_ancestors(ontology="GO", uri="...")
+
 
 class TestEcoPortalClient(cases.TestOntoPortalClient):
     """Test the EcoPortal client."""

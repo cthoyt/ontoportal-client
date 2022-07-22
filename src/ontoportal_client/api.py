@@ -93,6 +93,7 @@ class OntoPortalClient:
         }
 
     def annotate(self, text: str, require_exact_match: bool = True):
+        """Annotate the given text."""
         # include =['prefLabel', 'synonym', 'definition', 'semanticType', 'cui']
         include = ["prefLabel", "semanticType", "cui"]
         params = {"include": ",".join(include), "require_exact_match": require_exact_match, "text": text}
@@ -101,12 +102,14 @@ class OntoPortalClient:
         return self.get_json("/annotator", params=params)
 
     def search(self, text: str, ontology: Optional[str] = None):
+        """Search the given text."""
         params = {"q": text, "include": ["prefLabel"]}
         if ontology:
             params["ontologies"] = ontology
         return self.get_json("/search", params)
 
-    def ancestors(self, ontology: str, uri: str) -> Iterable[URI]:
+    def get_ancestors(self, ontology: str, uri: str):
+        """Get the ancestors of the given class."""
         quoted_uri = quote(uri, safe="")
         return self.get_json(
             f"/ontologies/{ontology}/classes/{quoted_uri}/ancestors",
