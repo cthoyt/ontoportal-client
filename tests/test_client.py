@@ -26,25 +26,27 @@ class TestBioPortalClient(cases.TestOntoPortalClient):
     def test_search(self):
         """Test searching an ontology."""
         res = self.instance.search("tentacle pocket")
-        self.assertTrue(
-            any("CEPH:0000259" in record for record in res),
-            msg=f"Could not find expected result in {res}",
-        )
+        ids = {record["@id"] for record in res.get("collection", [])}
+        self.assertIn("http://purl.obolibrary.org/obo/CEPH_0000259", ids)
 
     def test_annotate(self):
         """Test annotating a term."""
         res = self.instance.annotate("hippocampal neuron from human")
-        print(res)
-        # HUMAN = "NCBITaxon:9606" in it
-        # NEURON = "CL:0000540" in it
+        self.assertTrue(
+            any(
+                record["annotatedClass"]["@id"] == "http://purl.obolibrary.org/obo/NCBITaxon_9606"
+                for record in res
+            )
+        )
 
     def test_ancestors(self):
         """Test searching an ontology."""
         res = self.instance.get_ancestors(
             ontology="GO", uri="http://purl.obolibrary.org/obo/GO_0005773"
         )
-        self.assertIn("http://purl.obolibrary.org/obo/GO_0005575", res)  # cellular_component
-        self.assertIn("http://purl.obolibrary.org/obo/GO_0005737", res)  # cytoplasm
+        ids = {record["@id"] for record in res}
+        self.assertIn("http://purl.obolibrary.org/obo/GO_0005575", ids)  # cellular_component
+        self.assertIn("http://purl.obolibrary.org/obo/GO_0005737", ids)  # cytoplasm
 
 
 class TestEcoPortalClient(cases.TestOntoPortalClient):

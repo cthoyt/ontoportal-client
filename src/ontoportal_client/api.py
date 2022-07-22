@@ -5,7 +5,7 @@
 Get an API key by logging up, signing in, and navigating to .
 """
 
-from typing import Any, ClassVar, Dict, Optional, cast
+from typing import Any, ClassVar, Dict, Optional, Set, cast
 from urllib.parse import quote
 
 import pystow
@@ -92,7 +92,7 @@ class OntoPortalClient:
             for result in self.get_json(f"/ontologies/{ontology.upper()}/submissions")
         }
 
-    def annotate(self, text: str, require_exact_match: bool = True):
+    def annotate(self, text: str, ontology: Optional[str] = None, require_exact_match: bool = True):
         """Annotate the given text."""
         # include =['prefLabel', 'synonym', 'definition', 'semanticType', 'cui']
         include = ["prefLabel", "semanticType", "cui"]
@@ -101,8 +101,8 @@ class OntoPortalClient:
             "require_exact_match": require_exact_match,
             "text": text,
         }
-        if self.resource and self.resource.slug:
-            params["ontologies"] = self.resource.slug.upper()
+        if ontology:
+            params["ontologies"] = ontology
         return self.get_json("/annotator", params=params)
 
     def search(self, text: str, ontology: Optional[str] = None):
