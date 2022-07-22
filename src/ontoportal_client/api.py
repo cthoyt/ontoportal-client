@@ -75,7 +75,7 @@ class OntoPortalClient:
             params = {}
         params.setdefault("apikey", self.api_key)
         if path.startswith(self.base_url):
-            path = path[len(self.base_url):]
+            path = path[len(self.base_url) :]
         res = requests.get(self.base_url + "/" + path.lstrip("/"), params=params, **kwargs)
         if raise_for_status:
             res.raise_for_status()
@@ -96,7 +96,11 @@ class OntoPortalClient:
         """Annotate the given text."""
         # include =['prefLabel', 'synonym', 'definition', 'semanticType', 'cui']
         include = ["prefLabel", "semanticType", "cui"]
-        params = {"include": ",".join(include), "require_exact_match": require_exact_match, "text": text}
+        params = {
+            "include": ",".join(include),
+            "require_exact_match": require_exact_match,
+            "text": text,
+        }
         if self.resource and self.resource.slug:
             params["ontologies"] = self.resource.slug.upper()
         return self.get_json("/annotator", params=params)
