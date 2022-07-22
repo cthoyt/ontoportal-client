@@ -5,12 +5,12 @@
 Get an API key by logging up, signing in, and navigating to .
 """
 
-from typing import Any, ClassVar, Dict, Optional
+from typing import Any, ClassVar, Dict, Optional, cast
 
 import pystow
 import requests
 
-from .constants import URLS
+from .constants import NAMES, URLS
 
 __all__ = [
     # Base clients
@@ -39,9 +39,17 @@ class OntoPortalClient:
         self.api_key = api_key
         self.base_url = base_url.rstrip("/")
 
-    def get_json(self, path: str, params: Optional[Dict[str, Any]] = None, **kwargs):
+    def get_json(
+        self,
+        path: str,
+        params: Optional[Dict[str, Any]] = None,
+        raise_for_status: bool = True,
+        **kwargs,
+    ):
         """Get the response JSON."""
-        return self.get_response(path=path, params=params, **kwargs).json()
+        return self.get_response(
+            path=path, params=params, raise_for_status=raise_for_status, **kwargs
+        ).json()
 
     def get_response(
         self,
@@ -100,7 +108,7 @@ class PreconfiguredOntoPortalClient(OntoPortalClient):
         :param value_key:
             The name of the key to use. By default, uses ``api_key``
         """
-        base_url = URLS[self.name]
+        base_url = URLS[cast(NAMES, self.name)]
         if api_key is None:
             api_key = pystow.get_config(self.name, value_key, raise_on_missing=True)
         super().__init__(api_key=api_key, base_url=base_url)
