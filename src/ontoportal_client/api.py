@@ -44,12 +44,18 @@ class OntoPortalClient:
         return self.get_response(path=path, params=params, **kwargs).json()
 
     def get_response(
-        self, path: str, params: Optional[Dict[str, Any]] = None, **kwargs
+        self,
+        path: str,
+        params: Optional[Dict[str, Any]] = None,
+        raise_for_status: bool = True,
+        **kwargs,
     ) -> requests.Response:
         """Send a GET request the given endpoint on the OntoPortal site.
 
-        :param path: The path to query following the base URL, e.g., ``/ontologies``
+        :param path: The path to query following the base URL, e.g., ``/ontologies``.
+            If this starts with the base URL, it gets stripped.
         :param params: Parameters to pass through to :func:`requests.get`
+        :param raise_for_status: If true and the status code isn't 200, raise an exception
         :param kwargs: Keyword arguments to pass through to :func:`requests.get`
         :returns: The response from :func:`requests.get`
 
@@ -59,7 +65,12 @@ class OntoPortalClient:
         if not params:
             params = {}
         params.setdefault("apikey", self.api_key)
-        return requests.get(self.base_url + "/" + path.lstrip("/"), params=params, **kwargs)
+        if path.startswith(self.base_url):
+            path = path[len(self.base_url) :]
+        res = requests.get(self.base_url + "/" + path.lstrip("/"), params=params, **kwargs)
+        if raise_for_status:
+            res.raise_for_status()
+        return res
 
     def get_ontologies(self):
         """Get ontologies."""
