@@ -10,7 +10,7 @@ from typing import Any, ClassVar, Dict, Optional
 import pystow
 import requests
 
-from .constants import NAMES, URLS
+from .constants import URLS
 
 __all__ = [
     # Base clients
