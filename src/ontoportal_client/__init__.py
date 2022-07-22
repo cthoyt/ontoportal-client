@@ -10,10 +10,17 @@ from .api import (
     MedPortalClient,
     OntoPortalClient,
     SIFRBioPortalClient,
+    PreconfiguredOntoPortalClient,
 )
+from class_resolver import ClassResolver
 
 __all__ = [
+    # Resolver
+    "ontoportal_resolver",
+    # Base Classes
     "OntoPortalClient",
+    "PreconfiguredOntoPortalClient",
+    # Concrete Classes
     "AgroPortalClient",
     "EcoPortalClient",
     "BioPortalClient",
@@ -21,3 +28,9 @@ __all__ = [
     "SIFRBioPortalClient",
     "MedPortalClient",
 ]
+
+ontoportal_resolver = ClassResolver.from_subclasses(
+    OntoPortalClient,
+    suffix="Client",
+    skip={PreconfiguredOntoPortalClient},
+)
