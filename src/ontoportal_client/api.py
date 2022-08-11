@@ -106,11 +106,15 @@ class OntoPortalClient:
         return self.get_json("/annotator", params=params)
 
     def search(self, text: str, ontology: Optional[str] = None):
+        for page in self.search_paginated(text=text, ontology=ontology):
+            yield from page.get("collection", [])
+
+    def search_paginated(self, text: str, ontology: Optional[str] = None, start: str = "1"):
         """Search the given text."""
         params = {"q": text, "include": ["prefLabel"]}
         if ontology:
             params["ontologies"] = ontology
-        page = "1"
+        page = start
         while page:
             params["page"] = page
             result = self.get_json("/search", params)
