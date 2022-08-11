@@ -112,15 +112,14 @@ class OntoPortalClient:
 
     def search_paginated(self, text: str, ontology: Optional[str] = None, start: str = "1"):
         """Search the given text."""
-        params = {"q": text, "include": ["prefLabel"]}
+        params = {"q": text, "include": ["prefLabel"], "page": start}
         if ontology:
             params["ontologies"] = ontology
-        page = start
-        while page:
-            params["page"] = page
+        while params["page"]:
             result = self.get_json("/search", params)
             yield result
-            page = result["nextPage"]
+            # `result["nextPage"]` is always present but will be null on the last page
+            params["page"] = result["nextPage"]
 
     def get_ancestors(self, ontology: str, uri: str):
         """Get the ancestors of the given class."""
