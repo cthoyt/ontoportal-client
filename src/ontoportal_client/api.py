@@ -106,11 +106,20 @@ class OntoPortalClient:
         return self.get_json("/annotator", params=params)
 
     def search(self, text: str, ontology: Optional[str] = None):
+        """Search the given text and unroll the paginated results."""
+        for page in self.search_paginated(text=text, ontology=ontology):
+            yield from page.get("collection", [])
+
+    def search_paginated(self, text: str, ontology: Optional[str] = None, start: str = "1"):
         """Search the given text."""
-        params = {"q": text, "include": ["prefLabel"]}
+        params = {"q": text, "include": ["prefLabel"], "page": start}
         if ontology:
             params["ontologies"] = ontology
-        return self.get_json("/search", params)
+        while params["page"]:
+            result = self.get_json("/search", params)
+            yield result
+            # `result["nextPage"]` is always present but will be null on the last page
+            params["page"] = result["nextPage"]
 
     def get_ancestors(self, ontology: str, uri: str):
         """Get the ancestors of the given class."""
