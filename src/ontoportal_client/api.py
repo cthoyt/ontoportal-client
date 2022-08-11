@@ -110,13 +110,12 @@ class OntoPortalClient:
         params = {"q": text, "include": ["prefLabel"]}
         if ontology:
             params["ontologies"] = ontology
-        page = 1
+        page = "1"
         while page:
             params["page"] = page
             result = self.get_json("/search", params)
             yield result
-            page = result['nextPage']
-
+            page = result["nextPage"]
 
     def get_ancestors(self, ontology: str, uri: str):
         """Get the ancestors of the given class."""
