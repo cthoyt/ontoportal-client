@@ -106,6 +106,7 @@ class OntoPortalClient:
         return self.get_json("/annotator", params=params)
 
     def search(self, text: str, ontology: Optional[str] = None):
+        """Search the given text and unroll the paginated results."""
         for page in self.search_paginated(text=text, ontology=ontology):
             yield from page.get("collection", [])
 
