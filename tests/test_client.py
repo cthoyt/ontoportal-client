@@ -25,9 +25,18 @@ class TestBioPortalClient(cases.TestOntoPortalClient):
 
     def test_search(self):
         """Test searching an ontology."""
-        res = self.instance.search("tentacle pocket")
+        res = next(self.instance.search("tentacle pocket"))  # just get first page of results
         ids = {record["@id"] for record in res.get("collection", [])}
         self.assertIn("http://purl.obolibrary.org/obo/CEPH_0000259", ids)
+
+    def test_search_pagination(self):
+        """Test searching an ontology and verify that all results are accessible."""
+        actual_count = 0
+        expected_count = None
+        for page in self.instance.search("tentacle pocket"):
+            actual_count += len(page["collection"])
+            expected_count = page["totalCount"]
+        self.assertEqual(actual_count, expected_count)
 
     def test_annotate(self):
         """Test annotating a term."""
