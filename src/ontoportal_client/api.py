@@ -139,6 +139,16 @@ class OntoPortalClient:
             ),
         )
 
+    def get_mappings(self, ontology_1: str, ontology_2: str) -> Iterable[dict[str, Any]]:
+        """Get mappings between two ontologies."""
+        res_json = self.get_json("/mappings", params={"ontologies": f"{ontology_1},{ontology_2}"})
+        yield from res_json["collection"]
+        while next_page := res_json["links"]["nextPage"]:
+            res = requests.get(next_page, timeout=15)
+            res.raise_for_status()
+            res_json = res.json()
+            yield from res_json["collection"]
+
 
 class PreconfiguredOntoPortalClient(OntoPortalClient):
     """A client for an OntoPortal site, like BioPortal."""
