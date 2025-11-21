@@ -1,8 +1,6 @@
 """Constants for the OntoPortal Client."""
 
-from typing import Mapping
-
-from typing_extensions import Literal
+from typing import Literal
 
 __all__ = [
     "NAMES",
@@ -18,7 +16,7 @@ MEDPORTAL_BASE_URL = "http://data.medportal.bmicc.cn"
 
 NAMES = Literal["bioportal", "ecoportal", "agroportal", "matportal", "sifr_bioportal", "medportal"]
 
-URLS: Mapping[NAMES, str] = {
+URLS: dict[NAMES, str] = {
     "bioportal": BIOPORTAL_BASE_URL,
     "ecoportal": ECOPORTAL_BASE_URL,
     "agroportal": AGROPORTAL_BASE_URL,

@@ -362,6 +362,7 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+docs/build
 docs/source/api
 
 # PyBuilder
@@ -463,6 +464,11 @@ tags
 
 ### VisualStudioCode ###
 .vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
