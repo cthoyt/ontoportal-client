@@ -83,7 +83,7 @@ class TestMatPortalClient(cases.TestOntoPortalClient):
     """Test the MatPortal client."""
 
     cls: ClassVar[type[OntoPortalClient]] = MatPortalClient
-    test_acronym: ClassVar[str] = "DISO"
+    test_acronym: ClassVar[str] = "DRMO"
 
 
 class TestSIFRBioPortalClient(cases.TestOntoPortalClient):
@@ -107,6 +107,6 @@ class TestClients(unittest_templates.MetaTestCase[OntoPortalClient]):
     base_test: ClassVar[type[unittest_templates.GenericTestCase[OntoPortalClient]]] = (
         cases.TestOntoPortalClient
     )
-    skip_cls: ClassVar[Collection[type[OntoPortalClient]]] = {  # type:ignore
+    skip_cls: ClassVar[Collection[type[OntoPortalClient]]] = {
         PreconfiguredOntoPortalClient,
     }
