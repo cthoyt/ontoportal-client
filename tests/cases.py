@@ -14,7 +14,7 @@ class TestOntoPortalClient(unittest_templates.GenericTestCase[OntoPortalClient])
 
     test_acronym: ClassVar[str]
 
-    def test_get_ontologies(self):
+    def test_get_ontologies(self) -> None:
         """Test getting the ontologies."""
         res = self.instance.get_ontologies()
         self.assertLessEqual(0, len(res))

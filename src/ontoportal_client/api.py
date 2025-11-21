@@ -3,6 +3,7 @@
 Get an API key by logging up, signing in, and navigating to .
 """
 
+from collections.abc import Iterable
 from typing import Any, ClassVar, cast
 from urllib.parse import quote
 
@@ -43,8 +44,8 @@ class OntoPortalClient:
         path: str,
         params: dict[str, Any] | None = None,
         raise_for_status: bool = True,
-        **kwargs,
-    ):
+        **kwargs: Any,
+    ) -> Any:
         """Get the response JSON."""
         return self.get_response(
             path=path, params=params, raise_for_status=raise_for_status, **kwargs
@@ -55,7 +56,7 @@ class OntoPortalClient:
         path: str,
         params: dict[str, Any] | None = None,
         raise_for_status: bool = True,
-        **kwargs,
+        **kwargs: Any,
     ) -> requests.Response:
         """Send a GET request the given endpoint on the OntoPortal site.
 
@@ -81,9 +82,9 @@ class OntoPortalClient:
             res.raise_for_status()
         return res
 
-    def get_ontologies(self):
+    def get_ontologies(self) -> list[dict[str, Any]]:
         """Get ontologies."""
-        return self.get_json("ontologies")
+        return self.get_json("ontologies")  # type:ignore
 
     def get_ontology_versions(self, ontology: str) -> set[str]:
         """Get all versions for the given ontology."""
@@ -92,7 +93,9 @@ class OntoPortalClient:
             for result in self.get_json(f"/ontologies/{ontology.upper()}/submissions")
         }
 
-    def annotate(self, text: str, ontology: str | None = None, require_exact_match: bool = True):
+    def annotate(
+        self, text: str, ontology: str | None = None, require_exact_match: bool = True
+    ) -> list[dict[str, Any]]:
         """Annotate the given text."""
         # possible fields include 'prefLabel', 'synonym', 'definition', 'semanticType', 'cui'
         include = ["prefLabel", "semanticType", "cui"]
@@ -103,14 +106,16 @@ class OntoPortalClient:
         }
         if ontology:
             params["ontologies"] = ontology
-        return self.get_json("/annotator", params=params)
+        return self.get_json("/annotator", params=params)  # type:ignore
 
-    def search(self, text: str, ontology: str | None = None):
+    def search(self, text: str, ontology: str | None = None) -> Iterable[dict[str, Any]]:
         """Search the given text and unroll the paginated results."""
         for page in self.search_paginated(text=text, ontology=ontology):
             yield from page.get("collection", [])
 
-    def search_paginated(self, text: str, ontology: str | None = None, start: str = "1"):
+    def search_paginated(
+        self, text: str, ontology: str | None = None, start: str = "1"
+    ) -> Iterable[dict[str, Any]]:
         """Search the given text."""
         params = {"q": text, "include": ["prefLabel"], "page": start}
         if ontology:
@@ -121,12 +126,15 @@ class OntoPortalClient:
             # `result["nextPage"]` is always present but will be null on the last page
             params["page"] = result["nextPage"]
 
-    def get_ancestors(self, ontology: str, uri: str):
+    def get_ancestors(self, ontology: str, uri: str) -> list[dict[str, Any]]:
         """Get the ancestors of the given class."""
         quoted_uri = quote(uri, safe="")
-        return self.get_json(
-            f"/ontologies/{ontology}/classes/{quoted_uri}/ancestors",
-            params={"display_context": "false"},
+        return cast(
+            list[dict[str, Any]],
+            self.get_json(
+                f"/ontologies/{ontology}/classes/{quoted_uri}/ancestors",
+                params={"display_context": "false"},
+            ),
         )
 
 

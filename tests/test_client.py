@@ -1,6 +1,6 @@
 """Test OntoPortal clients."""
 
-import unittest
+from collections.abc import Collection
 from itertools import islice
 from typing import ClassVar
 
@@ -104,7 +104,9 @@ class TestClients(unittest_templates.MetaTestCase[OntoPortalClient]):
     """Test that the loss functions all have tests."""
 
     base_cls: ClassVar[type[OntoPortalClient]] = OntoPortalClient
-    base_test: ClassVar[type[unittest.TestCase]] = cases.TestOntoPortalClient
-    skip_cls: ClassVar[set[type[OntoPortalClient]]] = {
+    base_test: ClassVar[type[unittest_templates.GenericTestCase[OntoPortalClient]]] = (
+        cases.TestOntoPortalClient
+    )
+    skip_cls: ClassVar[Collection[type[OntoPortalClient]]] = {  # type:ignore
         PreconfiguredOntoPortalClient,
     }
