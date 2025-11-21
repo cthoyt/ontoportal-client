@@ -9,7 +9,6 @@
 
     installation
     usage
-    cli
 
 ********************
  Indices and Tables

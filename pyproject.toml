@@ -50,6 +50,7 @@ license-files = [
 requires-python = ">=3.10"
 dependencies = [
     "pystow",
+    "requests",
     "typing-extensions",
 ]
 
@@ -64,11 +65,6 @@ docs = [
     "sphinx>=8",
     "sphinx-rtd-theme>=3.0",
     "sphinx_automodapi",
-    # Include if your project uses Pydantic:
-    # "autodoc_pydantic",
-    # To include LaTeX comments easily in your docs.
-    # If you uncomment this, don't forget to do the same in docs/conf.py
-    # texext
 ]
 lint = [
     "ruff",
@@ -78,7 +74,7 @@ typing = [
     "mypy",
     "pydantic",
     "click-types",
-    # You will probably have to add additional type stubs here, especially if you're using tox-uv
+    "types-requests",
 ]
 docs-lint = [
     { include-group = "docs" },
@@ -135,7 +131,6 @@ skip = [
 # MyPy, see https://mypy.readthedocs.io/en/stable/config_file.html
 [tool.mypy]
 plugins = [
-    "pydantic.mypy",
 ]
 
 # Doc8, see https://doc8.readthedocs.io/en/stable/readme.html#ini-file-usage
