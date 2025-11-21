@@ -8,6 +8,7 @@ import unittest_templates
 
 from ontoportal_client.api import (
     AgroPortalClient,
+    IndustryPortalClient,
     BioPortalClient,
     EcoPortalClient,
     MatPortalClient,
@@ -98,6 +99,13 @@ class TestMedPortalClient(cases.TestOntoPortalClient):
 
     cls: ClassVar[type[OntoPortalClient]] = MedPortalClient
     test_acronym: ClassVar[str] = "DOID"
+
+
+class TestIndustryPortalClient(cases.TestOntoPortalClient):
+    """Test the IndustryPortal client."""
+
+    cls: ClassVar[type[OntoPortalClient]] = IndustryPortalClient
+    test_acronym: ClassVar[str] = "EMMO"
 
 
 class TestClients(unittest_templates.MetaTestCase[OntoPortalClient]):

@@ -17,6 +17,7 @@ __all__ = [
     "AgroPortalClient",
     "BioPortalClient",
     "EcoPortalClient",
+    "IndustryPortalClient",
     "MatPortalClient",
     "MedPortalClient",
     # Base clients
@@ -227,3 +228,13 @@ class MedPortalClient(PreconfiguredOntoPortalClient):
     """
 
     name = "medportal"
+
+
+class IndustryPortalClient(PreconfiguredOntoPortalClient):
+    """A client for industrial ontologies in `IndustryPortal <https://industryportal.enit.fr>`_.
+
+    Create an account and get an API key by starting at
+    https://industryportal.enit.fr/accounts/new.
+    """
+
+    name = "industryportal"
