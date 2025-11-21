@@ -1,3 +1,6 @@
-Usage
-=====
-.. automodapi:: ontoportal_client.api
+#######
+ Usage
+#######
+
+.. automodule:: ontolportal_client.api
+    :members:
