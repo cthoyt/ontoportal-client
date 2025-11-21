@@ -60,11 +60,13 @@ class OntoPortalClient:
     ) -> requests.Response:
         """Send a GET request the given endpoint on the OntoPortal site.
 
-        :param path: The path to query following the base URL, e.g., ``/ontologies``.
-            If this starts with the base URL, it gets stripped.
+        :param path: The path to query following the base URL, e.g., ``/ontologies``. If
+            this starts with the base URL, it gets stripped.
         :param params: Parameters to pass through to :func:`requests.get`
-        :param raise_for_status: If true and the status code isn't 200, raise an exception
+        :param raise_for_status: If true and the status code isn't 200, raise an
+            exception
         :param kwargs: Keyword arguments to pass through to :func:`requests.get`
+
         :returns: The response from :func:`requests.get`
 
         The rate limit is 15 queries per second. See:
@@ -147,19 +149,17 @@ class PreconfiguredOntoPortalClient(OntoPortalClient):
     def __init__(self, api_key: str | None = None, value_key: str = "api_key"):
         """Instantiate the OntoPortal Client.
 
-        :param api_key:
-            The API key for the instance. If not given, use :mod:`pystow` to read
-            the configuration in one of the following ways. Using BioPortal as an example,
-            where the subclass of :class:`PreconfiguredOntoPortalClient` sets the class
-            variable ``name = "bioportal"``, the configuration can be set in the following
-            ways:
+        :param api_key: The API key for the instance. If not given, use :mod:`pystow` to
+            read the configuration in one of the following ways. Using BioPortal as an
+            example, where the subclass of :class:`PreconfiguredOntoPortalClient` sets
+            the class variable ``name = "bioportal"``, the configuration can be set in
+            the following ways:
 
-            1. From `BIOPORTAL_API_KEY` in the environment, where the `name` is uppercased
-               before `_API_KEY`
-            2. From a configuration file at `~/.config/bioportal.ini`
-               and set the `[bioportal]` section in it with the given key
-        :param value_key:
-            The name of the key to use. By default, uses ``api_key``
+            1. From `BIOPORTAL_API_KEY` in the environment, where the `name` is
+               uppercased before `_API_KEY`
+            2. From a configuration file at `~/.config/bioportal.ini` and set the
+               `[bioportal]` section in it with the given key
+        :param value_key: The name of the key to use. By default, uses ``api_key``
         """
         base_url = URLS[cast(NAMES, self.name)]
         if api_key is None:
@@ -170,7 +170,8 @@ class PreconfiguredOntoPortalClient(OntoPortalClient):
 class BioPortalClient(PreconfiguredOntoPortalClient):
     """A client for BioPortal.
 
-    To get an API key, follow the sign-up process at https://bioportal.bioontology.org/account.
+    To get an API key, follow the sign-up process at
+    https://bioportal.bioontology.org/account.
     """
 
     name = "bioportal"
@@ -191,7 +192,8 @@ class EcoPortalClient(PreconfiguredOntoPortalClient):
 class MatPortalClient(PreconfiguredOntoPortalClient):
     """A client for materials science ontologies in `MatPortal <https://matportal.org>`_.
 
-    Create an account and get an API key by starting at https://matportal.org/accounts/new.
+    Create an account and get an API key by starting at
+    https://matportal.org/accounts/new.
     """
 
     name = "matportal"
@@ -200,7 +202,8 @@ class MatPortalClient(PreconfiguredOntoPortalClient):
 class SIFRBioPortalClient(PreconfiguredOntoPortalClient):
     """A client for French biomedical ontologies in `SIFR BioPortal <http://bioportal.lirmm.fr>`_.
 
-    Create an account and get an API key by starting at http://bioportal.lirmm.fr/accounts/new.
+    Create an account and get an API key by starting at
+    http://bioportal.lirmm.fr/accounts/new.
     """
 
     name = "sifr_bioportal"
@@ -209,7 +212,8 @@ class SIFRBioPortalClient(PreconfiguredOntoPortalClient):
 class MedPortalClient(PreconfiguredOntoPortalClient):
     """A client for medical ontologies in `MedPortal <https://medportal.bmicc.cn>`_.
 
-    Create an account and get an API key by starting at https://medportal.bmicc.cn/accounts/new.
+    Create an account and get an API key by starting at
+    https://medportal.bmicc.cn/accounts/new.
     """
 
     name = "medportal"
