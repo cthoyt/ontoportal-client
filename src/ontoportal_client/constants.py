@@ -1,8 +1,7 @@
 """Constants for the OntoPortal Client."""
 
-from typing import Mapping
-
-from typing_extensions import Literal
+from collections.abc import Mapping
+from typing import Literal
 
 __all__ = [
     "NAMES",

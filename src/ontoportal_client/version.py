@@ -1,28 +1,26 @@
-# -*- coding: utf-8 -*-
+"""Version information for :mod:`ontolportal_client`.
 
-"""Version information for :mod:`ontoportal_client`.
-
-Run with ``python -m ontoportal_client.version``
+Run with ``python -m ontolportal_client.version``
 """
 
 import os
-from subprocess import CalledProcessError, check_output  # noqa: S404
+from subprocess import CalledProcessError, check_output
 
 __all__ = [
     "VERSION",
-    "get_version",
     "get_git_hash",
+    "get_version",
 ]
 
-VERSION = "0.0.5-dev"
+VERSION = "0.0.1-dev"
 
 
 def get_git_hash() -> str:
-    """Get the :mod:`ontoportal_client` git hash."""
+    """Get the :mod:`ontolportal_client` git hash."""
     with open(os.devnull, "w") as devnull:
         try:
-            ret = check_output(  # noqa: S603,S607
-                ["git", "rev-parse", "HEAD"],
+            ret = check_output(
+                ["git", "rev-parse", "HEAD"],  # noqa:S607
                 cwd=os.path.dirname(__file__),
                 stderr=devnull,
             )
@@ -32,8 +30,8 @@ def get_git_hash() -> str:
             return ret.strip().decode("utf-8")[:8]
 
 
-def get_version(with_git_hash: bool = False):
-    """Get the :mod:`ontoportal_client` version string, including a git hash."""
+def get_version(with_git_hash: bool = False) -> str:
+    """Get the :mod:`ontolportal_client` version string, including a git hash."""
     return f"{VERSION}-{get_git_hash()}" if with_git_hash else VERSION
 
 

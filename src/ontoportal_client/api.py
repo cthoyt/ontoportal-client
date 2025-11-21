@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
-
 """Download the NCBO BioPortal registry.
 
 Get an API key by logging up, signing in, and navigating to .
 """
 
-from typing import Any, ClassVar, Dict, Optional, Set, cast
+from typing import Any, ClassVar, cast
 from urllib.parse import quote
 
 import pystow
@@ -14,16 +12,16 @@ import requests
 from .constants import NAMES, URLS
 
 __all__ = [
+    # Concrete clients
+    "AgroPortalClient",
+    "BioPortalClient",
+    "EcoPortalClient",
+    "MatPortalClient",
+    "MedPortalClient",
     # Base clients
     "OntoPortalClient",
     "PreconfiguredOntoPortalClient",
-    # Concrete clients
-    "AgroPortalClient",
-    "EcoPortalClient",
-    "BioPortalClient",
-    "MatPortalClient",
     "SIFRBioPortalClient",
-    "MedPortalClient",
 ]
 
 
@@ -43,7 +41,7 @@ class OntoPortalClient:
     def get_json(
         self,
         path: str,
-        params: Optional[Dict[str, Any]] = None,
+        params: dict[str, Any] | None = None,
         raise_for_status: bool = True,
         **kwargs,
     ):
@@ -55,7 +53,7 @@ class OntoPortalClient:
     def get_response(
         self,
         path: str,
-        params: Optional[Dict[str, Any]] = None,
+        params: dict[str, Any] | None = None,
         raise_for_status: bool = True,
         **kwargs,
     ) -> requests.Response:
@@ -76,7 +74,9 @@ class OntoPortalClient:
         params.setdefault("apikey", self.api_key)
         if path.startswith(self.base_url):
             path = path[len(self.base_url) :]
-        res = requests.get(self.base_url + "/" + path.lstrip("/"), params=params, **kwargs)
+        res = requests.get(
+            self.base_url + "/" + path.lstrip("/"), params=params, timeout=15, **kwargs
+        )
         if raise_for_status:
             res.raise_for_status()
         return res
@@ -85,16 +85,16 @@ class OntoPortalClient:
         """Get ontologies."""
         return self.get_json("ontologies")
 
-    def get_ontology_versions(self, ontology: str) -> Set[str]:
+    def get_ontology_versions(self, ontology: str) -> set[str]:
         """Get all versions for the given ontology."""
         return {
             result["version"]
             for result in self.get_json(f"/ontologies/{ontology.upper()}/submissions")
         }
 
-    def annotate(self, text: str, ontology: Optional[str] = None, require_exact_match: bool = True):
+    def annotate(self, text: str, ontology: str | None = None, require_exact_match: bool = True):
         """Annotate the given text."""
-        # include =['prefLabel', 'synonym', 'definition', 'semanticType', 'cui']
+        # possible fields include 'prefLabel', 'synonym', 'definition', 'semanticType', 'cui'
         include = ["prefLabel", "semanticType", "cui"]
         params = {
             "include": ",".join(include),
@@ -105,12 +105,12 @@ class OntoPortalClient:
             params["ontologies"] = ontology
         return self.get_json("/annotator", params=params)
 
-    def search(self, text: str, ontology: Optional[str] = None):
+    def search(self, text: str, ontology: str | None = None):
         """Search the given text and unroll the paginated results."""
         for page in self.search_paginated(text=text, ontology=ontology):
             yield from page.get("collection", [])
 
-    def search_paginated(self, text: str, ontology: Optional[str] = None, start: str = "1"):
+    def search_paginated(self, text: str, ontology: str | None = None, start: str = "1"):
         """Search the given text."""
         params = {"q": text, "include": ["prefLabel"], "page": start}
         if ontology:
@@ -136,7 +136,7 @@ class PreconfiguredOntoPortalClient(OntoPortalClient):
     #: The name of the instance
     name: ClassVar[str]
 
-    def __init__(self, api_key: Optional[str] = None, value_key: str = "api_key"):
+    def __init__(self, api_key: str | None = None, value_key: str = "api_key"):
         """Instantiate the OntoPortal Client.
 
         :param api_key:

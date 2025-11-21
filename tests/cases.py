@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Test a client."""
 
 from typing import ClassVar

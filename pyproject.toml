@@ -57,6 +57,7 @@ dependencies = [
 [dependency-groups]
 tests = [
     "pytest",
+    "unittest_templates",
     "coverage[toml]",
 ]
 docs = [
