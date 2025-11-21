@@ -37,8 +37,8 @@ A client to BioPortal and other OntoPortal instances.
 
 ## 💪 Getting Started
 
-One of several OntoPortal clients can be instantiated and
-accessed with the same API:
+One of several OntoPortal clients can be instantiated and accessed with the same
+API:
 
 ```python
 from ontoportal_client import BioPortalClient
@@ -50,13 +50,13 @@ ontologies = bioportal_client.get_ontologies()
 ## ⚙️ Configuration
 
 Configuration of the API tokens for each of the clients is mediated by
-[`pystow`](https://github.com/cthoyt/pystow). Using BioPortal as an example,
-you can either:
+[`pystow`](https://github.com/cthoyt/pystow). Using BioPortal as an example, you
+can either:
 
 1. Pass the API key in the constructor of the client class
 2. Set the `BIOPORTAL_API_KEY` environment variable
-3. Create a file `~/.config/bioportal.ini` and set the `api_key` value under
-   the `[bioportal]` section.
+3. Create a file `~/.config/bioportal.ini` and set the `api_key` value under the
+   `[bioportal]` section.
 
 ## 🚀 Installation
 
