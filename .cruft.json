@@ -4,7 +4,7 @@
   "checkout": null,
   "context": {
     "cookiecutter": {
-      "package_name": "ontolportal_client",
+      "package_name": "ontoportal_client",
       "package_name_stylized": "OntoPortal Client",
       "short_description": "A client to BioPortal and other OntoPortal instances",
       "author_name": "Charles Tapley Hoyt",
