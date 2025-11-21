@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-
 """Download the NCBO BioPortal registry.
 
 Get an API key by logging up, signing in, and navigating to .
 """
 
-from typing import Any, ClassVar, Dict, Iterable, Optional, Set, cast
+from collections.abc import Iterable
+from typing import Any, ClassVar, cast
 from urllib.parse import quote
 
 import pystow
@@ -14,16 +13,16 @@ import requests
 from .constants import NAMES, URLS
 
 __all__ = [
+    # Concrete clients
+    "AgroPortalClient",
+    "BioPortalClient",
+    "EcoPortalClient",
+    "MatPortalClient",
+    "MedPortalClient",
     # Base clients
     "OntoPortalClient",
     "PreconfiguredOntoPortalClient",
-    # Concrete clients
-    "AgroPortalClient",
-    "EcoPortalClient",
-    "BioPortalClient",
-    "MatPortalClient",
     "SIFRBioPortalClient",
-    "MedPortalClient",
 ]
 
 
@@ -43,10 +42,10 @@ class OntoPortalClient:
     def get_json(
         self,
         path: str,
-        params: Optional[Dict[str, Any]] = None,
+        params: dict[str, Any] | None = None,
         raise_for_status: bool = True,
-        **kwargs,
-    ):
+        **kwargs: Any,
+    ) -> Any:
         """Get the response JSON."""
         return self.get_response(
             path=path, params=params, raise_for_status=raise_for_status, **kwargs
@@ -55,17 +54,19 @@ class OntoPortalClient:
     def get_response(
         self,
         path: str,
-        params: Optional[Dict[str, Any]] = None,
+        params: dict[str, Any] | None = None,
         raise_for_status: bool = True,
-        **kwargs,
+        **kwargs: Any,
     ) -> requests.Response:
         """Send a GET request the given endpoint on the OntoPortal site.
 
-        :param path: The path to query following the base URL, e.g., ``/ontologies``.
-            If this starts with the base URL, it gets stripped.
+        :param path: The path to query following the base URL, e.g., ``/ontologies``. If
+            this starts with the base URL, it gets stripped.
         :param params: Parameters to pass through to :func:`requests.get`
-        :param raise_for_status: If true and the status code isn't 200, raise an exception
+        :param raise_for_status: If true and the status code isn't 200, raise an
+            exception
         :param kwargs: Keyword arguments to pass through to :func:`requests.get`
+
         :returns: The response from :func:`requests.get`
 
         The rate limit is 15 queries per second. See:
@@ -76,25 +77,29 @@ class OntoPortalClient:
         params.setdefault("apikey", self.api_key)
         if path.startswith(self.base_url):
             path = path[len(self.base_url) :]
-        res = requests.get(self.base_url + "/" + path.lstrip("/"), params=params, **kwargs)
+        res = requests.get(
+            self.base_url + "/" + path.lstrip("/"), params=params, timeout=15, **kwargs
+        )
         if raise_for_status:
             res.raise_for_status()
         return res
 
-    def get_ontologies(self):
+    def get_ontologies(self) -> list[dict[str, Any]]:
         """Get ontologies."""
-        return self.get_json("ontologies")
+        return self.get_json("ontologies")  # type:ignore
 
-    def get_ontology_versions(self, ontology: str) -> Set[str]:
+    def get_ontology_versions(self, ontology: str) -> set[str]:
         """Get all versions for the given ontology."""
         return {
             result["version"]
             for result in self.get_json(f"/ontologies/{ontology.upper()}/submissions")
         }
 
-    def annotate(self, text: str, ontology: Optional[str] = None, require_exact_match: bool = True):
+    def annotate(
+        self, text: str, ontology: str | None = None, require_exact_match: bool = True
+    ) -> list[dict[str, Any]]:
         """Annotate the given text."""
-        # include =['prefLabel', 'synonym', 'definition', 'semanticType', 'cui']
+        # possible fields include 'prefLabel', 'synonym', 'definition', 'semanticType', 'cui'
         include = ["prefLabel", "semanticType", "cui"]
         params = {
             "include": ",".join(include),
@@ -103,14 +108,16 @@ class OntoPortalClient:
         }
         if ontology:
             params["ontologies"] = ontology
-        return self.get_json("/annotator", params=params)
+        return self.get_json("/annotator", params=params)  # type:ignore
 
-    def search(self, text: str, ontology: Optional[str] = None):
+    def search(self, text: str, ontology: str | None = None) -> Iterable[dict[str, Any]]:
         """Search the given text and unroll the paginated results."""
         for page in self.search_paginated(text=text, ontology=ontology):
             yield from page.get("collection", [])
 
-    def search_paginated(self, text: str, ontology: Optional[str] = None, start: str = "1"):
+    def search_paginated(
+        self, text: str, ontology: str | None = None, start: str = "1"
+    ) -> Iterable[dict[str, Any]]:
         """Search the given text."""
         params = {"q": text, "include": ["prefLabel"], "page": start}
         if ontology:
@@ -121,12 +128,15 @@ class OntoPortalClient:
             # `result["nextPage"]` is always present but will be null on the last page
             params["page"] = result["nextPage"]
 
-    def get_ancestors(self, ontology: str, uri: str):
+    def get_ancestors(self, ontology: str, uri: str) -> list[dict[str, Any]]:
         """Get the ancestors of the given class."""
         quoted_uri = quote(uri, safe="")
-        return self.get_json(
-            f"/ontologies/{ontology}/classes/{quoted_uri}/ancestors",
-            params={"display_context": "false"},
+        return cast(
+            list[dict[str, Any]],
+            self.get_json(
+                f"/ontologies/{ontology}/classes/{quoted_uri}/ancestors",
+                params={"display_context": "false"},
+            ),
         )
 
     def get_mappings(self, ontology_1: str, ontology_2: str) -> Iterable[dict[str, Any]]:
@@ -146,22 +156,20 @@ class PreconfiguredOntoPortalClient(OntoPortalClient):
     #: The name of the instance
     name: ClassVar[str]
 
-    def __init__(self, api_key: Optional[str] = None, value_key: str = "api_key"):
+    def __init__(self, api_key: str | None = None, value_key: str = "api_key"):
         """Instantiate the OntoPortal Client.
 
-        :param api_key:
-            The API key for the instance. If not given, use :mod:`pystow` to read
-            the configuration in one of the following ways. Using BioPortal as an example,
-            where the subclass of :class:`PreconfiguredOntoPortalClient` sets the class
-            variable ``name = "bioportal"``, the configuration can be set in the following
-            ways:
+        :param api_key: The API key for the instance. If not given, use :mod:`pystow` to
+            read the configuration in one of the following ways. Using BioPortal as an
+            example, where the subclass of :class:`PreconfiguredOntoPortalClient` sets
+            the class variable ``name = "bioportal"``, the configuration can be set in
+            the following ways:
 
-            1. From `BIOPORTAL_API_KEY` in the environment, where the `name` is uppercased
-               before `_API_KEY`
-            2. From a configuration file at `~/.config/bioportal.ini`
-               and set the `[bioportal]` section in it with the given key
-        :param value_key:
-            The name of the key to use. By default, uses ``api_key``
+            1. From `BIOPORTAL_API_KEY` in the environment, where the `name` is
+               uppercased before `_API_KEY`
+            2. From a configuration file at `~/.config/bioportal.ini` and set the
+               `[bioportal]` section in it with the given key
+        :param value_key: The name of the key to use. By default, uses ``api_key``
         """
         base_url = URLS[cast(NAMES, self.name)]
         if api_key is None:
@@ -172,7 +180,8 @@ class PreconfiguredOntoPortalClient(OntoPortalClient):
 class BioPortalClient(PreconfiguredOntoPortalClient):
     """A client for BioPortal.
 
-    To get an API key, follow the sign-up process at https://bioportal.bioontology.org/account.
+    To get an API key, follow the sign-up process at
+    https://bioportal.bioontology.org/account.
     """
 
     name = "bioportal"
@@ -193,7 +202,8 @@ class EcoPortalClient(PreconfiguredOntoPortalClient):
 class MatPortalClient(PreconfiguredOntoPortalClient):
     """A client for materials science ontologies in `MatPortal <https://matportal.org>`_.
 
-    Create an account and get an API key by starting at https://matportal.org/accounts/new.
+    Create an account and get an API key by starting at
+    https://matportal.org/accounts/new.
     """
 
     name = "matportal"
@@ -202,7 +212,8 @@ class MatPortalClient(PreconfiguredOntoPortalClient):
 class SIFRBioPortalClient(PreconfiguredOntoPortalClient):
     """A client for French biomedical ontologies in `SIFR BioPortal <http://bioportal.lirmm.fr>`_.
 
-    Create an account and get an API key by starting at http://bioportal.lirmm.fr/accounts/new.
+    Create an account and get an API key by starting at
+    http://bioportal.lirmm.fr/accounts/new.
     """
 
     name = "sifr_bioportal"
@@ -211,7 +222,8 @@ class SIFRBioPortalClient(PreconfiguredOntoPortalClient):
 class MedPortalClient(PreconfiguredOntoPortalClient):
     """A client for medical ontologies in `MedPortal <https://medportal.bmicc.cn>`_.
 
-    Create an account and get an API key by starting at https://medportal.bmicc.cn/accounts/new.
+    Create an account and get an API key by starting at
+    https://medportal.bmicc.cn/accounts/new.
     """
 
     name = "medportal"

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """A client to BioPortal and other OntoPortal instances."""
 
 from .api import (
@@ -13,11 +11,11 @@ from .api import (
 )
 
 __all__ = [
-    "OntoPortalClient",
     "AgroPortalClient",
-    "EcoPortalClient",
     "BioPortalClient",
+    "EcoPortalClient",
     "MatPortalClient",
-    "SIFRBioPortalClient",
     "MedPortalClient",
+    "OntoPortalClient",
+    "SIFRBioPortalClient",
 ]
