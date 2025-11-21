@@ -11,14 +11,14 @@
 <p align="center">
     <a href="https://github.com/cthoyt/ontoportal-client/actions/workflows/tests.yml">
         <img alt="Tests" src="https://github.com/cthoyt/ontoportal-client/actions/workflows/tests.yml/badge.svg" /></a>
-    <a href="https://pypi.org/project/ontolportal_client">
-        <img alt="PyPI" src="https://img.shields.io/pypi/v/ontolportal_client" /></a>
-    <a href="https://pypi.org/project/ontolportal_client">
-        <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/ontolportal_client" /></a>
+    <a href="https://pypi.org/project/ontoportal_client">
+        <img alt="PyPI" src="https://img.shields.io/pypi/v/ontoportal_client" /></a>
+    <a href="https://pypi.org/project/ontoportal_client">
+        <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/ontoportal_client" /></a>
     <a href="https://github.com/cthoyt/ontoportal-client/blob/main/LICENSE">
-        <img alt="PyPI - License" src="https://img.shields.io/pypi/l/ontolportal_client" /></a>
-    <a href='https://ontolportal_client.readthedocs.io/en/latest/?badge=latest'>
-        <img src='https://readthedocs.org/projects/ontolportal_client/badge/?version=latest' alt='Documentation Status' /></a>
+        <img alt="PyPI - License" src="https://img.shields.io/pypi/l/ontoportal_client" /></a>
+    <a href='https://ontoportal_client.readthedocs.io/en/latest/?badge=latest'>
+        <img src='https://readthedocs.org/projects/ontoportal_client/badge/?version=latest' alt='Documentation Status' /></a>
     <a href="https://codecov.io/gh/cthoyt/ontoportal-client/branch/main">
         <img src="https://codecov.io/gh/cthoyt/ontoportal-client/branch/main/graph/badge.svg" alt="Codecov status" /></a>  
     <a href="https://github.com/cthoyt/cookiecutter-python-package">
@@ -61,16 +61,16 @@ you can either:
 ## 🚀 Installation
 
 The most recent release can be installed from
-[PyPI](https://pypi.org/project/ontolportal_client/) with uv:
+[PyPI](https://pypi.org/project/ontoportal_client/) with uv:
 
 ```console
-$ uv pip install ontolportal_client
+$ uv pip install ontoportal_client
 ```
 
 or with pip:
 
 ```console
-$ python3 -m pip install ontolportal_client
+$ python3 -m pip install ontoportal_client
 ```
 
 The most recent code and data can be installed directly from GitHub with uv:
@@ -283,7 +283,7 @@ This script does the following:
 
 1. Uses [bump-my-version](https://github.com/callowayproject/bump-my-version) to
    switch the version number in the `pyproject.toml`, `CITATION.cff`,
-   `src/ontolportal_client/version.py`, and
+   `src/ontoportal_client/version.py`, and
    [`docs/source/conf.py`](docs/source/conf.py) to not have the `-dev` suffix
 2. Packages the code in both a tar archive and a wheel using
    [`uv build`](https://docs.astral.sh/uv/guides/publish/#building-your-package)

@@ -3,17 +3,17 @@
 ##############
 
 The most recent release can be installed from `PyPI
-<https://pypi.org/project/ontolportal_client>`_ with uv:
+<https://pypi.org/project/ontoportal_client>`_ with uv:
 
 .. code-block:: console
 
-    $ uv pip install ontolportal_client
+    $ uv pip install ontoportal_client
 
 or with pip:
 
 .. code-block:: console
 
-    $ python3 -m pip install ontolportal_client
+    $ python3 -m pip install ontoportal_client
 
 *********************
  Installing from git

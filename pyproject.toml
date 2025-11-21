@@ -3,7 +3,7 @@ requires = ["uv_build>=0.9.6,<1.0"]
 build-backend = "uv_build"
 
 [project]
-name = "ontolportal_client"
+name = "ontoportal_client"
 version = "0.0.5-dev"
 description = "A client to BioPortal and other OntoPortal instances"
 readme = "README.md"
@@ -116,11 +116,11 @@ release = [
 "Bug Tracker" = "https://github.com/cthoyt/ontoportal-client/issues"
 Homepage = "https://github.com/cthoyt/ontoportal-client"
 Repository = "https://github.com/cthoyt/ontoportal-client.git"
-Documentation = "https://ontolportal_client.readthedocs.io"
+Documentation = "https://ontoportal_client.readthedocs.io"
 Funding = "https://github.com/sponsors/cthoyt"
 
 [project.scripts]
-ontolportal_client = "ontolportal_client.cli:main"
+ontoportal_client = "ontoportal_client.cli:main"
 
 [tool.cruft]
 skip = [
@@ -147,20 +147,20 @@ markers = [
 [tool.coverage.run]
 branch = true
 source = [
-    "ontolportal_client",
+    "ontoportal_client",
 ]
 omit = [
     "tests/*",
     "docs/*",
-    "src/ontolportal_client/version.py",
-    "src/ontolportal_client/__main__.py",
-    "src/ontolportal_client/cli.py",
+    "src/ontoportal_client/version.py",
+    "src/ontoportal_client/__main__.py",
+    "src/ontoportal_client/cli.py",
 ]
 
 [tool.coverage.paths]
 source = [
-    "src/ontolportal_client",
-    ".tox/*/lib/python*/site-packages/ontolportal_client",
+    "src/ontoportal_client",
+    ".tox/*/lib/python*/site-packages/ontoportal_client",
 ]
 
 [tool.coverage.report]
@@ -206,7 +206,7 @@ ignore = [
 # See https://docs.astral.sh/ruff/settings/#per-file-ignores
 [tool.ruff.lint.per-file-ignores]
 # Ignore security issues in the version.py, which are inconsistent
-"src/ontolportal_client/version.py" = ["S603", "S607"]
+"src/ontoportal_client/version.py" = ["S603", "S607"]
 # Ignore commented out code in Sphinx configuration file
 "docs/source/conf.py" = ["ERA001"]
 # Prints are okay in notebooks
@@ -221,7 +221,7 @@ known-third-party = [
     "tqdm",
 ]
 known-first-party = [
-    "ontolportal_client",
+    "ontoportal_client",
     "tests",
 ]
 
@@ -260,7 +260,7 @@ search = "release = \"{current_version}\""
 replace = "release = \"{new_version}\""
 
 [[tool.bumpversion.files]]
-filename = "src/ontolportal_client/version.py"
+filename = "src/ontoportal_client/version.py"
 search = "VERSION = \"{current_version}\""
 replace = "VERSION = \"{new_version}\""
 

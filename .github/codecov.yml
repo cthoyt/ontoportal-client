@@ -1,4 +1,4 @@
 # see https://docs.codecov.com/v4.6/docs/codecov-yaml
 ignore:
-  - "src/ontolportal_client/__main__.py"
-  - "src/ontolportal_client/cli.py"
+  - "src/ontoportal_client/__main__.py"
+  - "src/ontoportal_client/cli.py"

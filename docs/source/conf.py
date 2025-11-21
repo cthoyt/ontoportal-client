@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath("../../src"))
 
 # -- Project information -----------------------------------------------------
 
-project = "ontolportal_client"
+project = "ontoportal_client"
 copyright = f"{date.today().year}, Charles Tapley Hoyt"
 author = "Charles Tapley Hoyt"
 
@@ -60,7 +60,7 @@ if os.environ.get("READTHEDOCS", "") == "True":
 add_module_names = False
 
 # A list of prefixes that are ignored when creating the module index. (new in Sphinx 0.6)
-modindex_common_prefix = ["ontolportal_client."]
+modindex_common_prefix = ["ontoportal_client."]
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -146,7 +146,7 @@ if os.path.exists("logo.png"):
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "ontolportal_client_doc"
+htmlhelp_basename = "ontoportal_client_doc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -174,7 +174,7 @@ htmlhelp_basename = "ontolportal_client_doc"
 # latex_documents = [
 #     (
 #         master_doc,
-#         'ontolportal_client.tex',
+#         'ontoportal_client.tex',
 #         'OntoPortal Client Documentation',
 #         author,
 #         'manual',
@@ -188,7 +188,7 @@ htmlhelp_basename = "ontolportal_client_doc"
 man_pages = [
     (
         master_doc,
-        "ontolportal_client",
+        "ontoportal_client",
         "OntoPortal Client Documentation",
         [author],
         1,
@@ -203,7 +203,7 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "ontolportal_client",
+        "ontoportal_client",
         "OntoPortal Client Documentation",
         author,
         "Charles Tapley Hoyt",

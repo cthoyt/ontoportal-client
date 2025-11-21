@@ -2,5 +2,5 @@
  Usage
 #######
 
-.. automodule:: ontolportal_client.api
+.. automodule:: ontoportal_client.api
     :members:
