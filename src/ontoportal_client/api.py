@@ -155,16 +155,19 @@ class OntoPortalClient:
         timeout: int | None = None,
     ) -> Iterable[dict[str, Any]]:
         """Get mappings between two ontologies."""
-        tqdm.write(f"getting mappings from {ontology_1} to {ontology_2}")
         res_json = self.get_json(
             "/mappings", params={"ontologies": f"{ontology_1},{ontology_2}"}, timeout=timeout
         )
         page_count = res_json["pageCount"]
+        if not page_count:
+            tqdm.write(f"no pages returned from {ontology_1}->{ontology_2}")
+            return
         yield from res_json["collection"]
         with tqdm(
             total=page_count,
             disable=page_count == 1 or not progress,
             desc=f"Get mappings {ontology_1}->{ontology_2}",
+            unit="page",
         ) as pbar:
             pbar.update(1)  # already did first page
             while next_page := res_json["links"]["nextPage"]:
