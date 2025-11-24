@@ -38,7 +38,20 @@ classifiers = [
 keywords = [
     "snekpack", # please keep this keyword to credit the cookiecutter-snekpack template
     "cookiecutter",
-    # TODO add your own free-text keywords
+    "ontology",
+    "ontologies",
+    "controlled vocabulary",
+    "controlled vocabularies",
+    "BioPortal",
+    "OntoPortal",
+    "AgroPortal",
+    "MatPortal",
+    "EarthPortal",
+    "EcoPortal",
+    "IndustryPortal",
+    "SocioPortal",
+    "TechnoPortal",
+    "BioDivPortal",
 ]
 
 # License Information.
