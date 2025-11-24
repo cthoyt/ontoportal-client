@@ -3,6 +3,6 @@ message: "If you use this software, please cite it as below."
 title: "OntoPortal Client"
 authors:
   - name: "Charles Tapley Hoyt"
-version: 0.0.7
+version: 0.0.8-dev
 doi:
 url: "https://github.com/cthoyt/ontoportal-client"
