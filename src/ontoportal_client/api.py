@@ -16,17 +16,22 @@ from .constants import NAMES, URLS
 __all__ = [
     # Concrete clients
     "AgroPortalClient",
+    "BioDivPortal",
     "BioPortalClient",
+    "EarthPortal",
     "EcoPortalClient",
     "IndustryPortalClient",
+    "LovPortal",
     "MatPortalClient",
     "MedPortalClient",
     # Base clients
     "OntoPortalClient",
+    "OntoportalAstroClient",
     "PreconfiguredOntoPortalClient",
     "SIFRBioPortalClient",
+    "SocioPortal",
+    "TechnoPortal",
 ]
-
 
 DEFAULT_TIMEOUT = 5
 
@@ -277,3 +282,65 @@ class IndustryPortalClient(PreconfiguredOntoPortalClient):
     """
 
     name = "industryportal"
+
+
+class OntoportalAstroClient(PreconfiguredOntoPortalClient):
+    """A client for astrophysics ontologies in `OntoPortal-Astro <https://ontoportal-astro.eu/>`_.
+
+    Create an account and get an API key by starting at
+    https://ontoportal-astro.eu/accounts/new.
+    """
+
+    name = "ontoportal-astro"
+
+
+class BioDivPortal(PreconfiguredOntoPortalClient):
+    """A client for biodiversity ontologies in `BioDivPortal <https://biodivportal.gfbio.org/>`_.
+
+    Create an account and get an API key by starting at
+    https://biodivportal.gfbio.org/accounts/new.
+    """
+
+    name = "biodivportal"
+
+
+class EarthPortal(PreconfiguredOntoPortalClient):
+    """A client for biodiversity ontologies in `EarthPortal <https://earthportal.eu/>`_.
+
+    Create an account and get an API key by starting at
+    https://earthportal.eu/accounts/new.
+
+    .. warning:: This resource is dead
+    """
+
+    name = "earthportal"
+
+
+class SocioPortal(PreconfiguredOntoPortalClient):
+    """A client for sociology ontologies in `SocioPortal <https://socioportal.org/>`_.
+
+    Create an account and get an API key by starting at
+    https://socioportal.org/accounts/new.
+    """
+
+    name = "socioportal"
+
+
+class TechnoPortal(PreconfiguredOntoPortalClient):
+    """A client for engineering and technology ontologies in `TechnoPortal <https://technoportal.hevs.ch/>`_.
+
+    Create an account and get an API key by starting at
+    https://technoportal.hevs.ch/accounts/new.
+    """
+
+    name = "technoportal"
+
+
+class LovPortal(PreconfiguredOntoPortalClient):
+    """A client for semantic web ontologies in `LovPortal <https://lovportal.lirmm.fr/>`_.
+
+    Create an account and get an API key by starting at
+    https://lovportal.lirmm.fr/accounts/new.
+    """
+
+    name = "lovportal"

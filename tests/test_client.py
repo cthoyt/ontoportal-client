@@ -7,6 +7,7 @@ from typing import ClassVar
 
 import unittest_templates
 
+import ontoportal_client
 from ontoportal_client import ontoportal_resolver
 from ontoportal_client.api import (
     AgroPortalClient,
@@ -116,6 +117,48 @@ class TestIndustryPortalClient(cases.TestOntoPortalClient):
 
     cls: ClassVar[type[OntoPortalClient]] = IndustryPortalClient
     test_acronym: ClassVar[str] = "EMMO"
+
+
+class TestAstroPortalClient(cases.TestOntoPortalClient):
+    """Test the AstroPortal client."""
+
+    cls: ClassVar[type[OntoPortalClient]] = ontoportal_client.OntoportalAstroClient
+    test_acronym: ClassVar[str] = "UAT"
+
+
+class TestBioDivPortalClient(cases.TestOntoPortalClient):
+    """Test the BioDivPortal client."""
+
+    cls: ClassVar[type[OntoPortalClient]] = ontoportal_client.BioDivPortal
+    test_acronym: ClassVar[str] = "CL"
+
+
+class TestEarthPortalClient(cases.TestOntoPortalClient):
+    """Test the EarthPortal client."""
+
+    cls: ClassVar[type[OntoPortalClient]] = ontoportal_client.EarthPortal
+    test_acronym: ClassVar[str] = "N4E"
+
+
+class TestLovPortalClient(cases.TestOntoPortalClient):
+    """Test the LovPortal client."""
+
+    cls: ClassVar[type[OntoPortalClient]] = ontoportal_client.LovPortal
+    test_acronym: ClassVar[str] = "AGLS"
+
+
+class TestSocioPortalClient(cases.TestOntoPortalClient):
+    """Test the SocioPortal client."""
+
+    cls: ClassVar[type[OntoPortalClient]] = ontoportal_client.SocioPortal
+    test_acronym: ClassVar[str] = "ELSSTV5"
+
+
+class TestTechnoPortalClient(cases.TestOntoPortalClient):
+    """Test the TechnoPortal client."""
+
+    cls: ClassVar[type[OntoPortalClient]] = ontoportal_client.TechnoPortal
+    test_acronym: ClassVar[str] = "EUROSCIVOC"
 
 
 class TestClients(unittest_templates.MetaTestCase[OntoPortalClient]):
