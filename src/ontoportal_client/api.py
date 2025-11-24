@@ -9,6 +9,7 @@ from urllib.parse import quote
 
 import pystow
 import requests
+from tqdm import tqdm
 
 from .constants import NAMES, URLS
 
@@ -25,6 +26,9 @@ __all__ = [
     "PreconfiguredOntoPortalClient",
     "SIFRBioPortalClient",
 ]
+
+
+DEFAULT_TIMEOUT = 5
 
 
 class OntoPortalClient:
@@ -44,19 +48,17 @@ class OntoPortalClient:
         self,
         path: str,
         params: dict[str, Any] | None = None,
-        raise_for_status: bool = True,
         **kwargs: Any,
     ) -> Any:
         """Get the response JSON."""
-        return self.get_response(
-            path=path, params=params, raise_for_status=raise_for_status, **kwargs
-        ).json()
+        return self.get_response(path=path, params=params, **kwargs).json()
 
     def get_response(
         self,
         path: str,
         params: dict[str, Any] | None = None,
         raise_for_status: bool = True,
+        timeout: int | None = None,
         **kwargs: Any,
     ) -> requests.Response:
         """Send a GET request the given endpoint on the OntoPortal site.
@@ -66,6 +68,7 @@ class OntoPortalClient:
         :param params: Parameters to pass through to :func:`requests.get`
         :param raise_for_status: If true and the status code isn't 200, raise an
             exception
+        :param timeout: A configurable timeout for sending the request
         :param kwargs: Keyword arguments to pass through to :func:`requests.get`
 
         :returns: The response from :func:`requests.get`
@@ -79,7 +82,10 @@ class OntoPortalClient:
         if path.startswith(self.base_url):
             path = path[len(self.base_url) :]
         res = requests.get(
-            self.base_url + "/" + path.lstrip("/"), params=params, timeout=15, **kwargs
+            self.base_url + "/" + path.lstrip("/"),
+            params=params,
+            timeout=timeout or DEFAULT_TIMEOUT,
+            **kwargs,
         )
         if raise_for_status:
             res.raise_for_status()
@@ -140,15 +146,33 @@ class OntoPortalClient:
             ),
         )
 
-    def get_mappings(self, ontology_1: str, ontology_2: str) -> Iterable[dict[str, Any]]:
+    def get_mappings(
+        self,
+        ontology_1: str,
+        ontology_2: str,
+        *,
+        progress: bool = False,
+        timeout: int | None = None,
+    ) -> Iterable[dict[str, Any]]:
         """Get mappings between two ontologies."""
-        res_json = self.get_json("/mappings", params={"ontologies": f"{ontology_1},{ontology_2}"})
+        tqdm.write(f"getting mappings from {ontology_1} to {ontology_2}")
+        res_json = self.get_json(
+            "/mappings", params={"ontologies": f"{ontology_1},{ontology_2}"}, timeout=timeout
+        )
+        page_count = res_json["pageCount"]
         yield from res_json["collection"]
-        while next_page := res_json["links"]["nextPage"]:
-            res = requests.get(next_page, timeout=15)
-            res.raise_for_status()
-            res_json = res.json()
-            yield from res_json["collection"]
+        with tqdm(
+            total=page_count,
+            disable=page_count == 1 or not progress,
+            desc=f"Get mappings {ontology_1}->{ontology_2}",
+        ) as pbar:
+            pbar.update(1)  # already did first page
+            while next_page := res_json["links"]["nextPage"]:
+                pbar.update(1)
+                res = requests.get(next_page, timeout=timeout or DEFAULT_TIMEOUT)
+                res.raise_for_status()
+                res_json = res.json()
+                yield from res_json["collection"]
 
 
 class PreconfiguredOntoPortalClient(OntoPortalClient):

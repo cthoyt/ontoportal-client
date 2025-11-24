@@ -8,9 +8,9 @@ import unittest_templates
 
 from ontoportal_client.api import (
     AgroPortalClient,
-    IndustryPortalClient,
     BioPortalClient,
     EcoPortalClient,
+    IndustryPortalClient,
     MatPortalClient,
     MedPortalClient,
     OntoPortalClient,
