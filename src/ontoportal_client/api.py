@@ -4,7 +4,7 @@ Get an API key by logging up, signing in, and navigating to .
 """
 
 from collections.abc import Iterable
-from typing import Any, ClassVar, cast
+from typing import Any, ClassVar, Literal, cast
 from urllib.parse import quote
 
 import pystow
@@ -153,10 +153,18 @@ class OntoPortalClient:
         *,
         progress: bool = False,
         timeout: int | None = None,
+        display_links: bool = False,
+        display_context: bool = False,
     ) -> Iterable[dict[str, Any]]:
         """Get mappings between two ontologies."""
         res_json = self.get_json(
-            "/mappings", params={"ontologies": f"{ontology_1},{ontology_2}"}, timeout=timeout
+            "/mappings",
+            params={
+                "ontologies": f"{ontology_1},{ontology_2}",
+                "display_links": _bool(display_links),
+                "display_context": _bool(display_context),
+            },
+            timeout=timeout,
         )
         page_count = res_json["pageCount"]
         if not page_count:
@@ -176,6 +184,10 @@ class OntoPortalClient:
                 res.raise_for_status()
                 res_json = res.json()
                 yield from res_json["collection"]
+
+
+def _bool(x: bool) -> Literal["true", "false"]:
+    return "true" if x else "false"
 
 
 class PreconfiguredOntoPortalClient(OntoPortalClient):
