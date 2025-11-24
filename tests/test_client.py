@@ -1,11 +1,13 @@
 """Test OntoPortal clients."""
 
+import unittest
 from collections.abc import Collection
 from itertools import islice
 from typing import ClassVar
 
 import unittest_templates
 
+from ontoportal_client import ontoportal_resolver
 from ontoportal_client.api import (
     AgroPortalClient,
     BioPortalClient,
@@ -18,6 +20,14 @@ from ontoportal_client.api import (
     SIFRBioPortalClient,
 )
 from tests import cases
+
+
+class TestResolver(unittest.TestCase):
+    """Test the resolver."""
+
+    def test_resolver(self) -> None:
+        """Test the resolver."""
+        self.assertEqual(BioPortalClient, ontoportal_resolver.lookup("bioportal"))
 
 
 class TestBioPortalClient(cases.TestOntoPortalClient):

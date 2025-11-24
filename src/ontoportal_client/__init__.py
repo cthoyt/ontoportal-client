@@ -20,7 +20,6 @@ __all__ = [
     "MatPortalClient",
     "MedPortalClient",
     "OntoPortalClient",
-    "OntoPortalClient",
     "PreconfiguredOntoPortalClient",
     "SIFRBioPortalClient",
     "ontoportal_resolver",
