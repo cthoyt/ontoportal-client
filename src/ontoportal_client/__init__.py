@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
-
 """A client to BioPortal and other OntoPortal instances."""
+
+from class_resolver import ClassResolver
 
 from .api import (
     AgroPortalClient,
@@ -9,24 +9,21 @@ from .api import (
     MatPortalClient,
     MedPortalClient,
     OntoPortalClient,
-    SIFRBioPortalClient,
     PreconfiguredOntoPortalClient,
+    SIFRBioPortalClient,
 )
-from class_resolver import ClassResolver
 
 __all__ = [
-    # Resolver
-    "ontoportal_resolver",
-    # Base Classes
+    "AgroPortalClient",
+    "BioPortalClient",
+    "EcoPortalClient",
+    "MatPortalClient",
+    "MedPortalClient",
+    "OntoPortalClient",
     "OntoPortalClient",
     "PreconfiguredOntoPortalClient",
-    # Concrete Classes
-    "AgroPortalClient",
-    "EcoPortalClient",
-    "BioPortalClient",
-    "MatPortalClient",
     "SIFRBioPortalClient",
-    "MedPortalClient",
+    "ontoportal_resolver",
 ]
 
 ontoportal_resolver = ClassResolver.from_subclasses(
