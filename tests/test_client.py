@@ -122,7 +122,7 @@ class TestIndustryPortalClient(cases.TestOntoPortalClient):
 class TestAstroPortalClient(cases.TestOntoPortalClient):
     """Test the AstroPortal client."""
 
-    cls: ClassVar[type[OntoPortalClient]] = ontoportal_client.AstroPortalClient
+    cls: ClassVar[type[OntoPortalClient]] = ontoportal_client.OntoportalAstroClient
     test_acronym: ClassVar[str] = "UAT"
 
 

@@ -16,7 +16,6 @@ from .constants import NAMES, URLS
 __all__ = [
     # Concrete clients
     "AgroPortalClient",
-    "AstroPortalClient",
     "BioDivPortal",
     "BioPortalClient",
     "EarthPortal",
@@ -27,6 +26,7 @@ __all__ = [
     "MedPortalClient",
     # Base clients
     "OntoPortalClient",
+    "OntoportalAstroClient",
     "PreconfiguredOntoPortalClient",
     "SIFRBioPortalClient",
     "SocioPortal",
@@ -272,18 +272,18 @@ class IndustryPortalClient(PreconfiguredOntoPortalClient):
     name = "industryportal"
 
 
-class AstroPortalClient(PreconfiguredOntoPortalClient):
-    """A client for astrophysic ontologies in `OntoPortal-Astro <https://ontoportal-astro.eu/>`_.
+class OntoportalAstroClient(PreconfiguredOntoPortalClient):
+    """A client for astrophysics ontologies in `OntoPortal-Astro <https://ontoportal-astro.eu/>`_.
 
     Create an account and get an API key by starting at
     https://ontoportal-astro.eu/accounts/new.
     """
 
-    name = "astroportal"
+    name = "ontoportal-astro"
 
 
 class BioDivPortal(PreconfiguredOntoPortalClient):
-    """A client for biodiversity ontologies in `OntoPortal-Astro <https://biodivportal.gfbio.org/>`_.
+    """A client for biodiversity ontologies in `BioDivPortal <https://biodivportal.gfbio.org/>`_.
 
     Create an account and get an API key by starting at
     https://biodivportal.gfbio.org/accounts/new.

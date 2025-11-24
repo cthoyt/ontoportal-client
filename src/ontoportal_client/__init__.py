@@ -4,7 +4,6 @@ from class_resolver import ClassResolver
 
 from .api import (
     AgroPortalClient,
-    AstroPortalClient,
     BioDivPortal,
     BioPortalClient,
     EarthPortal,
@@ -12,6 +11,7 @@ from .api import (
     LovPortal,
     MatPortalClient,
     MedPortalClient,
+    OntoportalAstroClient,
     OntoPortalClient,
     PreconfiguredOntoPortalClient,
     SIFRBioPortalClient,
@@ -21,7 +21,6 @@ from .api import (
 
 __all__ = [
     "AgroPortalClient",
-    "AstroPortalClient",
     "BioDivPortal",
     "BioPortalClient",
     "EarthPortal",
@@ -30,6 +29,7 @@ __all__ = [
     "MatPortalClient",
     "MedPortalClient",
     "OntoPortalClient",
+    "OntoportalAstroClient",
     "PreconfiguredOntoPortalClient",
     "SIFRBioPortalClient",
     "SocioPortal",
