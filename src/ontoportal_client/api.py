@@ -1,7 +1,4 @@
-"""Download the NCBO BioPortal registry.
-
-Get an API key by logging up, signing in, and navigating to .
-"""
+"""Utilities for interacting with OntoPortal."""
 
 from collections.abc import Iterable
 from typing import Any, ClassVar, Literal, cast
@@ -227,6 +224,8 @@ class BioPortalClient(PreconfiguredOntoPortalClient):
 
     To get an API key, follow the sign-up process at
     https://bioportal.bioontology.org/account.
+
+    See API documentation at https://data.bioontology.org/documentation.
     """
 
     name = "bioportal"
