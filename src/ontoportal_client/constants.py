@@ -14,6 +14,7 @@ MATPORTAL_BASE_URL = "http://rest.matportal.org"
 SIFR_BIOPORTAL_BASE_URL = "http://data.bioportal.lirmm.fr"
 MEDPORTAL_BASE_URL = "http://data.medportal.bmicc.cn"
 INDUSTRYPORTAL_BASE_URL = "https://data.industryportal.enit.fr"
+BIODIVPORTAL_BASE_URL = "https://data.biodivportal.gfbio.org"
 
 NAMES = Literal[
     "bioportal",
@@ -23,6 +24,7 @@ NAMES = Literal[
     "sifr_bioportal",
     "medportal",
     "industryportal",
+    "biodivportal",
 ]
 
 URLS: dict[NAMES, str] = {
@@ -33,4 +35,5 @@ URLS: dict[NAMES, str] = {
     "sifr_bioportal": SIFR_BIOPORTAL_BASE_URL,
     "medportal": MEDPORTAL_BASE_URL,
     "industryportal": INDUSTRYPORTAL_BASE_URL,
+    "biodivportal": BIODIVPORTAL_BASE_URL,
 }

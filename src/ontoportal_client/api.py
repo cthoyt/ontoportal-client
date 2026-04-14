@@ -93,9 +93,23 @@ class OntoPortalClient:
             res.raise_for_status()
         return res
 
-    def get_ontologies(self) -> list[dict[str, Any]]:
+    def get_ontologies(
+        self, summary_only: bool | None = None, notes: bool | None = None
+    ) -> list[dict[str, Any]]:
         """Get ontologies."""
-        return self.get_json("ontologies")  # type:ignore
+        params = {}
+        if summary_only is not None:
+            params["summaryOnly"] = summary_only
+        if notes is not None:
+            params["notes"] = notes
+        return self.get_json("ontologies", params=params)  # type:ignore
+
+    def get_latest_submission(self, ontology: str, display: str | None = None) -> dict[str, Any]:
+        """Get the latest version of the given ontology."""
+        params = {}
+        if display is not None:
+            params["display"] = display
+        return self.get_json(f"/ontologies/{ontology}/latest_submission", params=params)
 
     def get_ontology_versions(self, ontology: str) -> set[str]:
         """Get all versions for the given ontology."""
