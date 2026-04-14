@@ -14,12 +14,12 @@ MATPORTAL_BASE_URL = "http://rest.matportal.org"
 SIFR_BIOPORTAL_BASE_URL = "http://data.bioportal.lirmm.fr"
 MEDPORTAL_BASE_URL = "http://data.medportal.bmicc.cn"
 INDUSTRYPORTAL_BASE_URL = "https://data.industryportal.enit.fr"
-ONTOPORTAL_ASTRO_BASE_URL = ""
+ONTOPORTAL_ASTRO_BASE_URL = "https://data.ontoportal-astro.eu"
 BIODIVPORTAL_BASE_URL = "https://data.biodivportal.gfbio.org"
-EARTHPORTAL_BASE_URL = ""
-SOCIOPORTAL_BASE_URL = ""
-TECHNOPORTAL_BASE_URL = ""
-LOVPORTAL_BASE_URL = ""
+EARTHPORTAL_BASE_URL = "https://data.earthportal.eu"
+SOCIOPORTAL_BASE_URL = "https://data.socioportal.org"
+TECHNOPORTAL_BASE_URL = "https://data.technoportal.hevs.ch"
+LOVPORTAL_BASE_URL = "https://data.lovportal.lirmm.fr"
 
 NAMES = Literal[
     "bioportal",
