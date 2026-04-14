@@ -109,7 +109,7 @@ class OntoPortalClient:
         params = {}
         if display is not None:
             params["display"] = display
-        return self.get_json(f"/ontologies/{ontology}/latest_submission", params=params)
+        return self.get_json(f"/ontologies/{ontology}/latest_submission", params=params)  # type:ignore
 
     def get_ontology_versions(self, ontology: str) -> set[str]:
         """Get all versions for the given ontology."""
