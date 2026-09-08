@@ -3,7 +3,7 @@ requires = ["uv_build>=0.9.6,<1.0"]
 build-backend = "uv_build"
 
 [project]
-name = "ontoportal_client"
+name = "ontoportal-client"
 version = "0.0.10-dev"
 description = "A client to BioPortal and other OntoPortal instances"
 readme = "README.md"
@@ -136,7 +136,7 @@ Documentation = "https://ontoportal_client.readthedocs.io"
 Funding = "https://github.com/sponsors/cthoyt"
 
 [project.scripts]
-ontoportal_client = "ontoportal_client.cli:main"
+ontoportal-client = "ontoportal_client.cli:main"
 
 [tool.cruft]
 skip = [
